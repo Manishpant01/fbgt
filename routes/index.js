@@ -3,7 +3,7 @@ const router = express.Router();
 const controler = require('../controller/commoncontroller');
 const passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
-var GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 passport.use(new FacebookStrategy({
     clientID: '225718861912716',
@@ -35,33 +35,31 @@ router.get('/auth/facebook/callback',passport.authenticate('facebook', {
 
 
 
+//google
 
-    // Google 
-
-
-
-
-    passport.use(new GoogleStrategy({
-        consumerKey: '636232219384-cg4frgdan3ib63detode8tsn2o1ksgue.apps.googleusercontent.com',
-        consumerSecret: 'dy4HMCgsSwziP_s-yuw-6Jw8',
-        callbackURL: "https://manish-fbgt.herokuapp.com/auth/google/callback"
-      },
-
-      function(accessToken, refreshToken, profile, cb) {
-
-        return cb(null,profile);
-       }
-     ));
-
-
-
-    router.get('/auth/google',
-     passport.authenticate('google', { scope: 'https://www.google.com/m8/feeds' }));
-   
-     router.get('/auth/google/callback',passport.authenticate('google', { 
-        failureRedirect: '/login' }),(req,res)=>{
-          console.log("PPPPPPPPPPPPPPPPPPPPPPPP",req.user)
-          res.render('reg.html');
-        });
+        passport.use(new GoogleStrategy({
+            clientID: '636232219384-cg4frgdan3ib63detode8tsn2o1ksgue.apps.googleusercontent.com',
+            clientSecret: 'dy4HMCgsSwziP_s-yuw-6Jw8',
+            callbackURL: "https://manish-fbgt.herokuapp.com/auth/google/callback"
+          },
+          function(accessToken, refreshToken, profile, cb) {
+        
+            console.log(profile)
+            return cb(null,profile)
+          }
+        ));
+        
+        
+        router.get('/auth/google',
+          passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+        
+        
+        router.get('/auth/google/callback', 
+          passport.authenticate('google', { failureRedirect: '/login' }),
+          function(req, res) {
+            console.log("ppppppppppppp",req.user)
+            res.send("hello");
+          });
+        
 
 module.exports = router;
