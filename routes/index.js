@@ -42,20 +42,20 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
   let url = user._json.url;
   console.log('>>>>>>>>>>>>..'+url);
   UserSchema.find({ $or: [{ '_id': id }, { 'email': email }] }, (err, result) => {
+    console.log('Result',result);
     if (err) {
 
-    } else if (result == null) {
+    } else if (result.length==0) {
       let userdata = new UserSchema({ 'name': name, 'email': email, '_id': id, 'url': url });
       userdata.save(function (err, result) {
         if (err) {
           console.log(err);
         } else {
           console.log(result);
-          res._json({result});
         }
       })
     }else{
-      res.json({result});
+     
     }
   })
 
