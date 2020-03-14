@@ -108,6 +108,7 @@ passport.use(new TwitterStrategy({
 
 router.get('/auth/twitter',
   passport.authenticate('twitter'));
+  
 
 router.get('/auth/twitter/callback',
   passport.authenticate('twitter', { failureRedirect: '/login' }),
