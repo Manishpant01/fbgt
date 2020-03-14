@@ -27,12 +27,12 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-mongoose.connect('mongodb://manishpant:manishpant@192.168.0.5/manishpant', {
+mongoose.connect('mongodb+srv://manish:test123@cluster0-ui3h9.mongodb.net/test?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 },(err,result)=>{
   if (result){
-    console.log("connected to database");app
+    console.log("connected to database");
   }
   else{
     console.log("err")
