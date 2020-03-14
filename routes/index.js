@@ -110,7 +110,49 @@ router.get('/auth/google/callback',
   function (req, res) {
     console.log("ppppppppppppp", req.user);
     let user = req.user;
-    res.json({ user });
+    // res.json({ user });
+    let id = user._json.sub;
+    console.log(id);
+    let name = user._json.name;
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.' + name);
+    let url = user._json.picture;
+    console.log('>>>>>>>>>>>>..', url);
+    let email = user._json.picture.email;
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>......:', email);
+    UserSchema.find({ $or: [{ '_id': id }, { 'email': email }] }, (err, result) => {
+      console.log('Result:', result);
+      console.log('hello');
+      if (err) {
+        console.log(err);
+      } else if (result.length == 0) {
+        let userdata = new UserSchema({ 'name': name, 'email': email, '_id': id, 'url': url });
+        userdata.save(function (err, result) {
+          if (err) {
+            console.log(err);
+          } else {
+            res.render('dashboard.html', { name, url });
+          }
+        })
+      } else {
+
+        let name = result[0].name;
+        console.log(name);
+        let url = result[0].url;
+        console.log(url);
+        let g_id = result[0]._id;
+        console.log(g_id);
+        if (g_id == undefined || null) {
+          result._id = id;
+          result.save((err) => {
+            if (err) {
+              console.log(err);
+            }
+          })
+        } else {
+          res.render('dashboard.html', { name, url });
+        }
+      }
+    })
   });
 
 
