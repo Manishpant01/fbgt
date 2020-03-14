@@ -37,6 +37,7 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
   res.json({ user });
   // res.render('reg.html');
   let id = user._json.id;
+  console.log(id);
   let name = user._json.name;
   console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.'+name)
   let url = user._json.url;
