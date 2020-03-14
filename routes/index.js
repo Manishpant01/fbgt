@@ -102,7 +102,7 @@ passport.use(new GoogleStrategy({
 
 
 router.get('/auth/google',
-  passport.authenticate('google', { scope: ['email'] }));
+  passport.authenticate('google', { scope: ['email','name'] }));
 
 
 router.get('/auth/google/callback',
@@ -110,7 +110,7 @@ router.get('/auth/google/callback',
   function (req, res) {
     console.log("ppppppppppppp", req.user);
     let user = req.user;
-    //  res.json({ user });
+     res.json({ user });
     let id = user._json.sub;
     console.log(id);
     let name = user._json.name;
