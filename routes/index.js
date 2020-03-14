@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controler = require('../controller/commoncontroller');
 const passport = require('passport');
+const UserSchema = require('../model/userschema');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var TwitterStrategy = require("passport-twitter").Strategy;
@@ -15,7 +16,7 @@ passport.use(new FacebookStrategy({
   function (accessToken, refreshToken, profile, cb) {
     console.log(profile);
     return cb(null, profile);
-    
+
   }
 ));
 
@@ -33,8 +34,32 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
 }), (req, res) => {
   console.log("PPPPPPPPPPPPPPPPPPPPPPPP", req.user)
   let user = req.user;
-  res.json({user})
+  res.json({ user });
   // res.render('reg.html');
+  let id = user._json.id;
+  let name = user._json.name;
+  console.log(name)
+  let url = user.url;
+  UserSchema.find({ $or: [{ '_id': id }, { 'email': email }] }, (err, result) => {
+    if (err) {
+
+    } else if (result == null) {
+      let userdata = new UserSchema({ 'name': name, 'email': email, '_id': id, 'url': url });
+      userdata.save(function (err, result) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(result);
+          res._json({result});
+        }
+      })
+    }else{
+      res.json({result});
+    }
+  })
+
+
+
 });
 
 
