@@ -24,7 +24,7 @@ passport.use(new FacebookStrategy({
 
 
 router.get('/', controler.regpage);
-router.get('/auth/facebook', passport.authenticate('facebook'));
+router.get('/auth/facebook', passport.authenticate('facebook',{ scope: ['email'] }));
 
 
 
@@ -42,8 +42,9 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
   console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.'+name);
   let url = user._json.picture.data.url;
   console.log('>>>>>>>>>>>>..',url);
-  UserSchema.find({ $or: [{ '_id': id }, { 'email': email }] }, (err, result) => {
-    console.log('Result',result);
+  UserSchema.find({ $or: [{ '_id': id },{ 'email': email }] }, (err, result) => {
+    console.log('Result:',result);
+    console.log('hello');
     if (err) {
 
     } else if (result.length==0) {
@@ -52,7 +53,7 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
         if (err) {
           console.log(err);
         } else {
-          console.log(result);
+          res.render('dashboard.html',{name,url});
         }
       })
     }else{
