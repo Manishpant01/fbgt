@@ -109,8 +109,8 @@ router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   function (req, res) {
     console.log("ppppppppppppp", req.user);
-    console.log('manish');
-    res.send("hello");
+    let user = req.user;
+    res.json({ user });
   });
 
 
