@@ -102,7 +102,7 @@ passport.use(new GoogleStrategy({
 
 
 router.get('/auth/google',
-  passport.authenticate('google', { scope: ['email'] }));
+  passport.authenticate('google', { scope: ['email','profile'] }));
 
 
 router.get('/auth/google/callback',
@@ -110,14 +110,14 @@ router.get('/auth/google/callback',
   function (req, res) {
     console.log("ppppppppppppp", req.user);
     let user = req.user;
-     res.json({ user });
+    res.json({ user });
     let id = user._json.sub;
     console.log(id);
     let name = user._json.name;
     console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.' , name);
     let url = user._json.picture;
     console.log('>>>>>>>>>>>>..', url);
-    let email = user.email;
+    let email = data._json.email;
     console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>......:', email);
     UserSchema.find({ $or: [{ '_id': id }, { 'email': email }] }, (err, result) => {
       console.log('Result:', result);
@@ -131,7 +131,7 @@ router.get('/auth/google/callback',
             console.log(err);
           } else {
             console.log(result);
-            res.render('dashboard.html', { name, url });
+           // res.render('dashboard.html', { name, url });
           }
         })
       } else {
