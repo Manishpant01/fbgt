@@ -110,7 +110,7 @@ router.get('/auth/google/callback',
   function (req, res) {
     console.log("ppppppppppppp", req.user);
     let user = req.user;
-     res.json({ user });
+    //  res.json({ user });
     let id = user._json.sub;
     console.log(id);
     let name = user._json.name;
@@ -130,6 +130,7 @@ router.get('/auth/google/callback',
           if (err) {
             console.log(err);
           } else {
+            console.log(result);
             res.render('dashboard.html', { name, url });
           }
         })
