@@ -42,6 +42,8 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
   console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.'+name);
   let url = user._json.picture.data.url;
   console.log('>>>>>>>>>>>>..',url);
+  let email = user._json.picture.data.url.email
+  console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>......:',email);
   UserSchema.find({ $or: [{ '_id': id },{ 'email': email }] }, (err, result) => {
     console.log('Result:',result);
     console.log('hello');
