@@ -113,7 +113,7 @@ router.get('/auth/google/callback',
     // res.json({ user });
     let id = user._json.sub;
     console.log(id);
-    let name = data._json.name;
+    let name = user._json.name;
     console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.' , name);
     let url = user._json.picture;
     console.log('>>>>>>>>>>>>..', url);
