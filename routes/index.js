@@ -24,7 +24,7 @@ passport.use(new FacebookStrategy({
 
 
 router.get('/', controler.regpage);
-router.get('/auth/facebook', passport.authenticate('facebook',{ scope: ['email'] }));
+router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
 
 
 
@@ -39,39 +39,43 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
   let id = user._json.id;
   console.log(id);
   let name = user._json.name;
-  console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.'+name);
+  console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.' + name);
   let url = user._json.picture.data.url;
-  console.log('>>>>>>>>>>>>..',url);
+  console.log('>>>>>>>>>>>>..', url);
   let email = user._json.email;
-  console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>......:',email);
-  UserSchema.find({ $or: [{ '_id': id },{ 'email': email }] }, (err, result) => {
-    console.log('Result:',result);
+  console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>......:', email);
+  UserSchema.find({ $or: [{ '_id': id }, { 'email': email }] }, (err, result) => {
+    console.log('Result:', result);
     console.log('hello');
     if (err) {
-       console.log(err);
-    } else if (result.length==0) {
+      console.log(err);
+    } else if (result.length == 0) {
       let userdata = new UserSchema({ 'name': name, 'email': email, '_id': id, 'url': url });
       userdata.save(function (err, result) {
         if (err) {
           console.log(err);
         } else {
-          res.render('dashboard.html',{name,url});
+          res.render('dashboard.html', { name, url });
         }
       })
-    }else{
-        let name = result[0].name;
-        let url = result[0].url;
-        let f_id = result[0]._id;
-        if(f_id == undefined || null){
-          result._id = id;
-          result.save((err)=>{
-            if(err){
-              console.log(err);
-            }else{
-              res.render('dashboard.html',{name,url});
-            }
-          })
-        }
+    } else {
+
+      let name = result[0].name;
+      console.log(name);
+      let url = result[0].url;
+      console.log(url);
+      let f_id = result[0]._id;
+      console.log(f_id);
+      if (f_id == undefined || null) {
+        result._id = id;
+        result.save((err) => {
+          if (err) {
+            console.log(err);
+          }
+        })
+      } else {
+        res.render('dashboard.html', { name, url });
+      }
     }
   })
 
