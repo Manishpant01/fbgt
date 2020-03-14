@@ -48,7 +48,7 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
     console.log('Result:',result);
     console.log('hello');
     if (err) {
-
+       console.log(err);
     } else if (result.length==0) {
       let userdata = new UserSchema({ 'name': name, 'email': email, '_id': id, 'url': url });
       userdata.save(function (err, result) {
