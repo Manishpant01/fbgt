@@ -102,7 +102,7 @@ passport.use(new GoogleStrategy({
 
 
 router.get('/auth/google',
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+  passport.authenticate('google', { scope: ['email'] }));
 
 
 router.get('/auth/google/callback',
