@@ -180,6 +180,8 @@ router.get('/auth/twitter/callback',
     res.send("hello");
   });
 
+  router.post('/login',controler.login)
+
 
 
 module.exports = router;
