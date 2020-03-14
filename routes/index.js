@@ -42,7 +42,7 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
   console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.'+name);
   let url = user._json.picture.data.url;
   console.log('>>>>>>>>>>>>..',url);
-  let email = user.email;
+  let email = user._json.email;
   console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>......:',email);
   UserSchema.find({ $or: [{ '_id': id },{ 'email': email }] }, (err, result) => {
     console.log('Result:',result);
@@ -59,7 +59,19 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
         }
       })
     }else{
-     
+        let name = result[0].name;
+        let url = result[0].url;
+        let f_id = result[0]._id;
+        if(f_id == undefined || null){
+          result._id = id;
+          result.save((err)=>{
+            if(err){
+              console.log(err);
+            }else{
+              res.render('dashboard.html',{name,url});
+            }
+          })
+        }
     }
   })
 
