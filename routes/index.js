@@ -13,8 +13,9 @@ passport.use(new FacebookStrategy({
   profileFields: ['id', 'displayName', 'photos', 'email', 'profileUrl']
 },
   function (accessToken, refreshToken, profile, cb) {
-
+    console.log(profile);
     return cb(null, profile);
+    
   }
 ));
 
@@ -31,7 +32,9 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
   failureRedirect: '/login'
 }), (req, res) => {
   console.log("PPPPPPPPPPPPPPPPPPPPPPPP", req.user)
-  res.render('reg.html');
+  let user = req.user;
+  res.json({user})
+  // res.render('reg.html');
 });
 
 
@@ -46,8 +49,8 @@ passport.use(new GoogleStrategy({
 },
   function (accessToken, refreshToken, profile, cb) {
 
-    console.log(profile)
-    return cb(null, profile)
+    console.log(profile);
+    return cb(null, profile);
   }
 ));
 
@@ -59,7 +62,8 @@ router.get('/auth/google',
 router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   function (req, res) {
-    console.log("ppppppppppppp", req.user)
+    console.log("ppppppppppppp", req.user);
+    console.log('manish');
     res.send("hello");
   });
 
