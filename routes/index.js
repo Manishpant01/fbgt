@@ -38,8 +38,9 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
   // res.render('reg.html');
   let id = user._json.id;
   let name = user._json.name;
-  console.log(name)
+  console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.'+name)
   let url = user.url;
+  console.log('>>>>>>>>>>>>..'+url);
   UserSchema.find({ $or: [{ '_id': id }, { 'email': email }] }, (err, result) => {
     if (err) {
 
@@ -108,7 +109,7 @@ passport.use(new TwitterStrategy({
 
 router.get('/auth/twitter',
   passport.authenticate('twitter'));
-  
+
 
 router.get('/auth/twitter/callback',
   passport.authenticate('twitter', { failureRedirect: '/login' }),
