@@ -80,7 +80,7 @@ passport.use(new TwitterStrategy({
 router.get('/auth/twitter',
   passport.authenticate('twitter'));
 
-router.get('/auth/google/callback',
+router.get('/auth/twitter/callback',
   passport.authenticate('twitter', { failureRedirect: '/login' }),
   function (req, res) {
     console.log("ppppppppppppp", req.user)
