@@ -110,7 +110,7 @@ router.get('/auth/google/callback',
   function (req, res) {
     console.log("ppppppppppppp", req.user);
     let user = req.user;
-    res.json({ user });
+    // res.json({ user });
     let id = user._json.sub;
     console.log(id);
     let name = data._json.name;
@@ -121,7 +121,6 @@ router.get('/auth/google/callback',
     console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>......:', email);
     UserSchema.find({ $or: [{ '_id': id }, { 'email': email }] }, (err, result) => {
       console.log('Result:', result);
-      console.log('hello');
       if (err) {
         console.log(err);
       } else if (result.length == 0) {
@@ -131,7 +130,7 @@ router.get('/auth/google/callback',
             console.log(err);
           } else {
             console.log(result);
-           // res.render('dashboard.html', { name, url });
+            res.render('dashboard.html', { name, url });
           }
         })
       } else {
