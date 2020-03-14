@@ -117,7 +117,7 @@ router.get('/auth/google/callback',
     console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.' , name);
     let url = user._json.picture;
     console.log('>>>>>>>>>>>>..', url);
-    let email = user._json.picture.email;
+    let email = user.email;
     console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>......:', email);
     UserSchema.find({ $or: [{ '_id': id }, { 'email': email }] }, (err, result) => {
       console.log('Result:', result);
