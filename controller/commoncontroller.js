@@ -3,30 +3,41 @@ const passport = require('passport');
 const Strategy = require('passport-facebook').Strategy;
 
 
-function regpage(req,res){
+function regpage(req, res) {
     res.render('reg.html')
 }
 
-function login(req,res){
+function login(req, res) {
     let username = req.body.username;
     console.log(username);
     let password = req.body.password;
     console.log(password);
 
-    UserSchema.findOne({'name':username},(err,data)=>{
-        if(err){
+    UserSchema.findOne({ 'name': username }, (err, data) => {
+        if (err) {
             console.log(err);
-        }else if(data == null){
+        } else if (data == null) {
             console.log('user does not register')
             res.json('user does not register');
-        }else{
+        } else {
             console.log(data);
             let name = data.name;
             console.log(name);
             let url = data.url;
             console.log(url);
-            res.render('dashboard.html', { name, url });
+            let id = data.id;
+            console.log(id);
+            jwt.sign({ '_id': id }, key.secretkey, { expiresIn: '60m' }, (err, token) => {
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log("TOKEN SEND >>>>>>>>>>>>>>>>" + token);
+                    res.cookie('token', token).render('dashboard.html', { name, url });
+                }
 
+
+                
+            })
         }
     })
 
@@ -37,5 +48,5 @@ function login(req,res){
 
 
 module.exports = {
-    regpage,login
+    regpage, login
 }
