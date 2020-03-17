@@ -44,13 +44,13 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
   console.log('>>>>>>>>>>>>..', url);
   let email = user._json.email;
   console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>......:', email);
-  UserSchema.find({ $or: [{ '_id': id }, { 'email': email }] }, (err, result) => {
+  UserSchema.find({ $or: [{ 'f_id': id }, { 'email': email }] }, (err, result) => {
     console.log('Result:', result);
     console.log('hello');
     if (err) {
       console.log(err);
     } else if (result.length == 0) {
-      let userdata = new UserSchema({ 'name': name, 'email': email, '_id': id, 'url': url });
+      let userdata = new UserSchema({ 'name': name, 'email': email, 'f_id': id, 'url': url });
       userdata.save(function (err, result) {
         if (err) {
           console.log(err);
@@ -64,10 +64,10 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
       console.log(name);
       let url = result[0].url;
       console.log(url);
-      let f_id = result[0]._id;
+      let f_id = result[0].f_id;
       console.log(f_id);
       if (f_id == undefined || null) {
-        result._id = id;
+        result.f_id = id;
         result.save((err) => {
           if (err) {
             console.log(err);
@@ -119,12 +119,12 @@ router.get('/auth/google/callback',
     console.log('>>>>>>>>>>>>..', url);
     let email = user._json.email;
     console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>......:', email);
-    UserSchema.find({ $or: [{ '_id': id }, { 'email': email }] }, (err, result) => {
+    UserSchema.find({ $or: [{ 'f_id': id }, { 'email': email }] }, (err, result) => {
       console.log('Result:', result);
       if (err) {
         console.log(err);
       } else if (result.length == 0) {
-        let userdata = new UserSchema({ 'name': name, 'email': email, '_id': id, 'url': url });
+        let userdata = new UserSchema({ 'name': name, 'email': email, 'f_id': id, 'url': url });
         userdata.save(function (err, result) {
           if (err) {
             console.log(err);
@@ -139,10 +139,10 @@ router.get('/auth/google/callback',
         console.log(name);
         let url = result[0].url;
         console.log(url);
-        let g_id = result[0]._id;
+        let g_id = result[0].f_id;
         console.log(g_id);
         if (g_id == undefined || null) {
-          result._id = id;
+          result.f_id = id;
           result.save((err) => {
             if (err) {
               console.log(err);
