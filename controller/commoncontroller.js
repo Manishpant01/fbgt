@@ -1,5 +1,6 @@
 const UserSchema = require('../model/userschema');
 const key = require('../key');
+const jwt = require(jwt);
 // const passport = require('passport');
 // const Strategy = require('passport-facebook').Strategy;
 let masg = "";
@@ -30,7 +31,8 @@ function login(req, res) {
                     if (isMatch == false) {
                         let masg = "Password Is Wrong"
                         res.render('reg.html', { masg });
-                    }else{ console.log(data);
+                    } else {
+                        console.log(data);
                         let name = data.name;
                         console.log(name);
                         let url = data.url;
@@ -44,9 +46,10 @@ function login(req, res) {
                                 console.log("TOKEN SEND >>>>>>>>>>>>>>>>" + token);
                                 res.cookie('token', token).render('dashboard.html', { name, url });
                             }
-                        })}
+                        })
+                    }
                 }
-               
+
             })
         }
     })
