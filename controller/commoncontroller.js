@@ -10,12 +10,12 @@ function regpage(req, res) {
 }
 
 function login(req, res) {
-    let username = req.body.username;
-    console.log(username);
+    let email = req.body.email;
+    console.log(email);
     let password = req.body.password;
     console.log(password);
 
-    UserSchema.findOne({ 'name': username }, (err, data) => {
+    UserSchema.findOne({ 'email': email }, (err, data) => {
         console.log(data);
         if (err) {
             console.log(err);
