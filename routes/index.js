@@ -94,7 +94,6 @@ passport.use(new GoogleStrategy({
   callbackURL: "https://manish-fbgt.herokuapp.com/auth/google/callback"
 },
   function (accessToken, refreshToken, profile, cb) {
-
     console.log(profile);
     return cb(null, profile);
   }
