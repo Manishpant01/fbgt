@@ -110,7 +110,7 @@ function forgotpage(req, res) {
 function passchange(req, res) {
     let email = req.body.email || undefined;
     console.log(email);
-    let pass = req.body.password || undefined;
+    let pass = req.body.pass || undefined;
     console.log(pass);
     let hashpass = req.newpassword;
     console.log(hashpass);
@@ -134,11 +134,9 @@ function passchange(req, res) {
 }
 
 function newpass(req, res, next) {
-    let pass = req.body.password;
+    let pass = req.body.pass;
     console.log(pass);
-    console.log ('hello');
-
-    bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
+    bcrypt.genSalt(10, function (err, salt) {
         if (err) return next(err);
 
         bcrypt.hash(pass, salt, function (err, hash) {
