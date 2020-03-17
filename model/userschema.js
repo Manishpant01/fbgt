@@ -6,6 +6,7 @@ const UserSchema = new Schema({
     name: { type: String },
     email: { type: String, unique: true },
     f_id: { type: Number },
+    g_id: { type: Number },
     url: { type: String },
     is_deleted: { type: Boolean, default: false },
     password: { type: String }

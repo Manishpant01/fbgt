@@ -119,12 +119,12 @@ router.get('/auth/google/callback',
     console.log('>>>>>>>>>>>>..', url);
     let email = user._json.email;
     console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>......:', email);
-    UserSchema.find({ $or: [{ 'f_id': id }, { 'email': email }] }, (err, result) => {
+    UserSchema.find({ $or: [{ 'g_id': id }, { 'email': email }] }, (err, result) => {
       console.log('Result:', result);
       if (err) {
         console.log(err);
       } else if (result.length == 0) {
-        let userdata = new UserSchema({ 'name': name, 'email': email, 'f_id': id, 'url': url });
+        let userdata = new UserSchema({ 'name': name, 'email': email, 'g_id': id, 'url': url });
         userdata.save(function (err, result) {
           if (err) {
             console.log(err);
@@ -139,10 +139,10 @@ router.get('/auth/google/callback',
         console.log(name);
         let url = result[0].url;
         console.log(url);
-        let g_id = result[0].f_id;
+        let g_id = result[0].g_id;
         console.log(g_id);
         if (g_id == undefined || null) {
-          result.f_id = id;
+          result.g_id = id;
           result.save((err) => {
             if (err) {
               console.log(err);
