@@ -180,7 +180,9 @@ router.get('/auth/twitter/callback',
     res.send("hello");
   });
 
-  router.post('/login',controler.login)
+  router.post('/login',controler.login);
+  router.get('/userregpage',controler.userregpage);
+  router.post('/userreg',controler.userreg);
 
 
 
