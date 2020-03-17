@@ -15,6 +15,10 @@ function login(req, res) {
     console.log(email);
     let password = req.body.password;
     console.log(password);
+    if(email == ''|| password == ''){
+        let masg = 'None Data Found';
+        res.render('reg.html',{masg})
+    }
 
     UserSchema.findOne({ 'email': email }, (err, data) => {
         console.log(data);
