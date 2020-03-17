@@ -70,7 +70,7 @@ function userreg(req, res) {
             console.log(result);
             if (err) {
                 console.log(err)
-            } else if (result.length == 0) {
+            } else if (result == null) {
                 let userdata = new UserSchema({ 'name': name, 'email': email, 'password': password });
                 userdata.save(function (err, result) {
                     if (err) {
