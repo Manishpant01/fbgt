@@ -136,6 +136,7 @@ function passchange(req, res) {
 function newpass(req, res, next) {
     let pass = req.body.password;
     console.log(pass);
+    console.log ('hello');
 
     bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
         if (err) return next(err);
