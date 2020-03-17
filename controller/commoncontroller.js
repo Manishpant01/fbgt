@@ -15,9 +15,9 @@ function login(req, res) {
     console.log(email);
     let password = req.body.password;
     console.log(password);
-    if(email == ''|| password == ''){
+    if (email == '' || password == '') {
         let masg = 'None Data Found';
-        res.render('reg.html',{masg})
+        res.render('reg.html', { masg })
     }
 
     UserSchema.findOne({ 'email': email }, (err, data) => {
@@ -31,7 +31,7 @@ function login(req, res) {
             data.comparePassword(password, function (err, isMatch) {
                 if (err) {
                     let masg = "Please click on Forgot Password to Generate Your Password"
-                    res.render('reg.html',{masg})
+                    res.render('reg.html', { masg })
                 }
                 else {
                     console.log('Password:', isMatch);
@@ -100,9 +100,61 @@ function userreg(req, res) {
 
 }
 
+function forgotpage(req, res) {
+    res.render('forgotpass.html', { masg });
+}
+
+
+function passchange(req, res) {
+    let email = req.body.email || undefined;
+    console.log(email);
+    let pass = req.body.password || undefined;
+    console.log(pass);
+    let hashpass = req.newpassword;
+    console.log(hashpass);
+    if (email == undefined || pass == undefined) {
+        let masg = 'None Data Found';
+        res.render("forgotpass.html", { masg });
+    } else {
+        UserSchema.findOneAndUpdate({ 'email': email }, { $set: { 'password': hashpass } }, (err, data) => {
+            if (err) {
+                console.log(err);
+            } else if (data == null) {
+                let masg = "You are Not Registered"
+                res.render('forgotpass.html', { masg })
+            } else {
+                console.log("data:>>>>", data);
+                let masg = " Your Password successfully Saved"
+                res.render('reg.html', { masg })
+            }
+        })
+    }
+}
+
+function newpass(req, res, next) {
+    let pass = req.body.password;
+    console.log(pass);
+
+    bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
+        if (err) return next(err);
+
+        bcrypt.hash(pass, salt, function (err, hash) {
+            if (err) return next(err);
+
+            newpassword = hash;
+            req.pass = pass;
+            req.newpassword = newpassword;
+            console.log(newpassword);
+
+            next();
+
+        })
+    })
+}
+
 
 
 
 module.exports = {
-    regpage, login, userregpage, userreg
+    regpage, login, userregpage, userreg, forgotpage, passchange, newpass
 }
