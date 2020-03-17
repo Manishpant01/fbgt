@@ -1,6 +1,8 @@
 const UserSchema = require('../model/userschema');
 const key = require('../key');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+SALT_WORK_FACTOR = 10;
 // const passport = require('passport');
 // const Strategy = require('passport-facebook').Strategy;
 let masg = "";
