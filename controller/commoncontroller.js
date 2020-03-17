@@ -67,6 +67,7 @@ function userreg(req, res) {
 
     } else {
         UserSchema.findOne({ 'email': email }, (err, result) => {
+            console.log(result);
             if (err) {
                 console.log(err)
             } else if (result.length == 0) {
