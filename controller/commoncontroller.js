@@ -25,7 +25,10 @@ function login(req, res) {
             res.json('user does not register');
         } else {
             data.comparePassword(password, function (err, isMatch) {
-                if (err) throw err;
+                if (err) {
+                    let masg = "Please click on Forgot Password to Generate Your Password"
+                    res.render('reg.html',{masg})
+                }
                 else {
                     console.log('Password:', isMatch);
                     if (isMatch == false) {
