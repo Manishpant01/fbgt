@@ -30,23 +30,23 @@ function login(req, res) {
                     if (isMatch == false) {
                         let masg = "Password Is Wrong"
                         res.render('reg.html', { masg });
-                    }
+                    }else{ console.log(data);
+                        let name = data.name;
+                        console.log(name);
+                        let url = data.url;
+                        console.log(url);
+                        let id = data.id;
+                        console.log(id);
+                        jwt.sign({ '_id': id }, key.secretkey, { expiresIn: '60m' }, (err, token) => {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                console.log("TOKEN SEND >>>>>>>>>>>>>>>>" + token);
+                                res.cookie('token', token).render('dashboard.html', { name, url });
+                            }
+                        })}
                 }
-                console.log(data);
-                let name = data.name;
-                console.log(name);
-                let url = data.url;
-                console.log(url);
-                let id = data.id;
-                console.log(id);
-                jwt.sign({ '_id': id }, key.secretkey, { expiresIn: '60m' }, (err, token) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log("TOKEN SEND >>>>>>>>>>>>>>>>" + token);
-                        res.cookie('token', token).render('dashboard.html', { name, url });
-                    }
-                })
+               
             })
         }
     })
