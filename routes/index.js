@@ -184,7 +184,7 @@ router.get('/auth/twitter/callback',
   router.get('/userregpage',controler.userregpage);
   router.post('/userreg',controler.userreg);
   router.get('/forgotpage',controler.forgotpage);
-  router.post('/ passchange',controler.newpass,controler.passchange);
+  router.post('/passchange',controler.newpass,controler.passchange);
 
 
 
